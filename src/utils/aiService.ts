@@ -14,7 +14,7 @@ interface AIResponse {
 export class AIService {
   private apiKey: string;
 
-  constructor(apiKey: string = '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') {
+  constructor(apiKey: string = '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') {
     this.apiKey = apiKey;
   }
 
