@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ResumeData } from '../types';
 
-const AI_API_BASE_URL = 'https://openrouter.ai/api/v1';
+const AI_API_BASE_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 interface AIResponse {
   choices: {
