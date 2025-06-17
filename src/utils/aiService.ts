@@ -97,7 +97,7 @@ ${resumeText}`;
 
     try {
       const response = await axios.post<AIResponse>(
-        `${AI_API_BASE_URL}/chat/completions`,
+        AI_API_BASE_URL,
         {
           model: 'meta-llama/llama-4-maverick:free',
           messages: [
@@ -231,7 +231,7 @@ ${resumeText}`;
 
     try {
       const response = await axios.post<AIResponse>(
-        `${AI_API_BASE_URL}/chat/completions`,
+        AI_API_BASE_URL,
         {
           model: 'meta-llama/llama-4-maverick:free',
           messages: [
