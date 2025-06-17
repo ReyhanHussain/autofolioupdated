@@ -14,11 +14,21 @@ interface AIResponse {
 export class AIService {
   private apiKey: string;
 
-  constructor(apiKey: string = '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') {
-    this.apiKey = apiKey;
+  constructor(apiKey?: string) {
+    this.apiKey = apiKey || import.meta.env.VITE_OPENROUTER_API_KEY || '';
+    
+    if (!this.apiKey) {
+      console.warn('OpenRouter API key not found. Please set VITE_OPENROUTER_API_KEY in your .env file.');
+    }
   }
 
   async parseResume(resumeText: string): Promise<ResumeData> {
+    // If no API key is available, use fallback parsing
+    if (!this.apiKey) {
+      console.warn('No API key available, using fallback parsing');
+      return this.getFallbackData(resumeText);
+    }
+
     const prompt = `You are a professional resume parser. Analyze the following resume text and extract structured data. Return ONLY a valid JSON object with this exact structure (no additional text, explanations, or markdown formatting):
 
 {
@@ -222,6 +232,11 @@ ${resumeText}`;
   }
 
   async enhanceContent(data: ResumeData, section: string): Promise<string> {
+    // If no API key is available, return default content
+    if (!this.apiKey) {
+      return data.summary || 'Professional summary will be generated here.';
+    }
+
     const prompt = `Based on the following resume data, generate enhanced content for the ${section} section.
     Make it professional, compelling, and tailored for a portfolio website.
     
